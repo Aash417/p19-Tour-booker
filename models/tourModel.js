@@ -8,18 +8,6 @@ const tourSchema = new mongoose.Schema({
     unique: true,
     trim: true
   },
-  price: {
-    type: Number,
-    required: [true, 'A price must be set']
-  },
-  ratingAverage: {
-    type: Number,
-    default: 4.5
-  },
-  ratingQuantity: {
-    type: Number,
-    default: 0
-  },
   duration: {
     type: Number,
     required: [true, 'A tour must have a duration.']
@@ -32,7 +20,19 @@ const tourSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Must have a difficulty']
   },
-  priceDiscount: Number,
+  ratingAverage: {
+    type: Number,
+    default: 4.5
+  },
+  ratingQuantity: {
+    type: Number,
+    default: 0
+  },
+  price: {
+    type: Number,
+    required: [true, 'A price must be set']
+  },
+  //   priceDiscount: Number,
   summary: {
     type: String,
     trim: true,
@@ -48,11 +48,12 @@ const tourSchema = new mongoose.Schema({
     required: [true, 'must have a cover image']
   },
   images: [String],
-  createdAt: {
-    type: Date,
-    default: Date.now()
-  },
+
   startDates: [Date]
+  //   createdAt: {
+  //     type: Date,
+  //     default: Date.now()
+  //   }
 });
 
 // create a model from schema
