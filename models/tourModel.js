@@ -32,7 +32,7 @@ const tourSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'A price must be set']
   },
-  //   priceDiscount: Number,
+  priceDiscount: Number,
   summary: {
     type: String,
     trim: true,
@@ -49,11 +49,12 @@ const tourSchema = new mongoose.Schema({
   },
   images: [String],
 
-  startDates: [Date]
-  //   createdAt: {
-  //     type: Date,
-  //     default: Date.now()
-  //   }
+  startDates: [Date],
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    select: false
+  }
 });
 
 // create a model from schema
