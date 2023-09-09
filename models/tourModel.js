@@ -110,7 +110,7 @@ tourSchema.pre(/^find/, function(next) {
 // Aggregation middleware
 tourSchema.pre('aggregate', function(next) {
   this.pipeline().unshift({ $match: { difficulty: { $ne: 'easy' } } });
-  console.log(this.pipeline());
+  //   console.log(this.pipeline());
   next();
 });
 

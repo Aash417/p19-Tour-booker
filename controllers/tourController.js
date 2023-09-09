@@ -25,6 +25,7 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
     status: 'success',
     requestedAt: req.requestTime,
     results: tours.length,
+    from: process.env.NODE_ENV,
     data: {
       tours
     }
@@ -63,7 +64,7 @@ exports.updateTour = catchAsync(async (req, res, next) => {
   });
 
   if (!tour) {
-    return next(new AppError('no tour find with that id', 404));
+    return next(new AppError('No tour found with that ID', 404));
   }
 
   res.status(200).json({
