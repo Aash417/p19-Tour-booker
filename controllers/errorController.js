@@ -25,9 +25,7 @@ const sendErrorDev = (err, res) => {
     status: err.status,
     error: err,
     message: err.message,
-    stack: err.stack,
-    name: err.name,
-    code: err.code
+    stack: err.stack
   });
 };
 

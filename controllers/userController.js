@@ -1,30 +1,30 @@
 exports.getAllUsers = (req, res) => {
   res.status(500).json({
-    status: 'error',
+    status: 'error1',
     message: 'This route is not yet defined!'
   });
 };
 exports.getUser = (req, res) => {
   res.status(500).json({
-    status: 'error',
+    status: 'error2',
     message: 'This route is not yet defined!'
   });
 };
 exports.createUser = (req, res) => {
   res.status(500).json({
-    status: 'error',
+    status: 'error3',
     message: 'This route is not yet defined!'
   });
 };
 exports.updateUser = (req, res) => {
   res.status(500).json({
-    status: 'error',
+    status: 'error4',
     message: 'This route is not yet defined!'
   });
 };
 exports.deleteUser = (req, res) => {
   res.status(500).json({
-    status: 'error',
+    status: 'error5',
     message: 'This route is not yet defined!'
   });
 };
