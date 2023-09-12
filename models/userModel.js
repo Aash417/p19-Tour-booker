@@ -33,9 +33,11 @@ const userSchema = new mongoose.Schema({
       },
       message: 'password are not the same'
     }
-  }
+  },
+  passwordChangedAt: Date
 });
 
+// Password encryption middleware
 userSchema.pre('save', async function(next) {
   // Only run this function if password is modified
   if (!this.isModified('password')) return next();
@@ -47,12 +49,26 @@ userSchema.pre('save', async function(next) {
   this.passwordConfirm = undefined;
 });
 
-// Instance method
+// Instance method : verifying the user's password with our encrypted password
 userSchema.methods.correctPassword = async function(
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    // console.log(changedTimestamp, JWTTimestamp);
+
+    return JWTTimestamp < changedTimestamp;
+  }
+  //   False means not changed
+  return false;
 };
 
 const User = mongoose.model('User', userSchema);

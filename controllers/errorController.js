@@ -19,6 +19,12 @@ const handleValidationErrorDB = err => {
   const message = `Invalid input data. ${errors.join('. ')}`;
   return new AppError(message, 400);
 };
+// JWT Error
+const handleJWTError = () =>
+  new AppError('Invalid Token , please login again.!', 401);
+// JWT token expiration error
+const handleJWTExpirerror = () =>
+  new AppError('Your token expire , please login again.!', 401);
 
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
@@ -40,7 +46,7 @@ const sendErroPord = (err, res) => {
   //   Programming or other unknown error : don't leak error details
   else {
     // 1. log the error
-    console.error(`Error here : `, err);
+    console.error(`Error here 🔥: `, err);
     // 2. Send generic message
     res.status(500).json({
       status: 'error occured',
@@ -62,6 +68,8 @@ module.exports = (err, req, res, next) => {
     if (err.name === 'CastError') error = handleCastErrorDB(err);
     if (err.code === 11000) error = handleDuplicateFieldsDB(err);
     if (err.name === 'ValidationError') error = handleValidationErrorDB(err);
+    if (err.name === 'JsonWebTokenError') error = handleJWTError();
+    if (err.name === 'TokenExpiredError') error = handleJWTExpirerror();
 
     sendErroPord(error, res);
   }
