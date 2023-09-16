@@ -42,7 +42,12 @@ const userSchema = new mongoose.Schema({
   },
   passwordChangedAt: Date,
   passwordResetToken: String,
-  passwordResetExpire: Date
+  passwordResetExpire: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false
+  }
 });
 
 // Password encryption middleware
@@ -57,6 +62,7 @@ userSchema.pre('save', async function(next) {
   this.passwordConfirm = undefined;
 });
 
+// If password is modified set Password changed at property
 userSchema.pre('save', function(next) {
   if (!this.isModified('password') || this.isNew) return next();
 
@@ -64,6 +70,15 @@ userSchema.pre('save', function(next) {
 
   next();
 });
+
+// If active is true remove from query
+userSchema.pre(/^find/, function(next) {
+  // this points to the current que4ry
+  this.find({ active: { $ne: false } });
+
+  next();
+});
+
 // Instance method : verifying the user's password with our encrypted password
 userSchema.methods.correctPassword = async function(
   candidatePassword,
