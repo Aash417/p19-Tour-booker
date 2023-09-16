@@ -57,6 +57,13 @@ userSchema.pre('save', async function(next) {
   this.passwordConfirm = undefined;
 });
 
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+
+  next();
+});
 // Instance method : verifying the user's password with our encrypted password
 userSchema.methods.correctPassword = async function(
   candidatePassword,
