@@ -7,8 +7,9 @@ const app = require('./app');
 const errorController = require('./controllers/errorController');
 
 process.on('uncaughtException', err => {
+  console.log('Uncaught Exception');
   console.log(err.name, err.message);
-
+  console.log(err.stack);
   process.exit(1);
 });
 // connect with mongoose
@@ -33,7 +34,9 @@ const server = app.listen(port, () => {
 });
 
 process.on('unhandledRejection', err => {
+  console.log('Rejected promise :');
   console.log(err.name, err.message);
+  console.log(err.stack);
   server.close(() => {
     process.exit(1);
   });
