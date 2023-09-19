@@ -112,8 +112,16 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+// virtuals
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
+});
+
+// Virtual for connecting two refferencing in document
+tourSchema.virtual('review', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id'
 });
 
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()
