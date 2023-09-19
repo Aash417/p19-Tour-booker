@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const user = require('./userModel');
+const tour = require('./tourModel');
+
 const reviewSchema = new mongoose.Schema(
   {
     review: {
@@ -12,12 +15,12 @@ const reviewSchema = new mongoose.Schema(
       max: 5
     },
     createdAt: { type: Date, default: Date.now },
-    tourId: {
+    tour: {
       type: mongoose.Schema.ObjectId,
-      ref: 'Tours',
+      ref: 'Tour',
       required: [true, 'Review must belong to a tour']
     },
-    userId: {
+    user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
       requrired: [true, 'Review must have a user']
@@ -29,6 +32,17 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-const Review = mongoose.model('Review', reviewSchema);
+reviewSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: 'name'
+  }).populate({
+    path: 'tour',
+    select: 'name'
+  });
+  next();
+});
 
+// Review module
+const Review = mongoose.model('Review', reviewSchema);
 module.exports = Review;
