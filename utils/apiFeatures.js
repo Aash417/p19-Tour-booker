@@ -10,7 +10,16 @@ class APIFeature {
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach(e => delete queryObj[e]);
 
-    this.query = this.query.find(queryObj);
+    // this will let you turn your parmas to query obj
+    //     { duration: { gte: '10' } }
+    // { duration: { '$gte': '10' } }
+
+    let queryStr = JSON.stringify(queryObj);
+    // console.log(JSON.parse(queryStr));
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+    // console.log(JSON.parse(queryStr));
+
+    this.query = this.query.find(JSON.parse(queryStr));
     return this;
   }
 

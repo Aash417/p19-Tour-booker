@@ -118,7 +118,7 @@ tourSchema.virtual('durationWeeks').get(function() {
 });
 
 // Virtual for connecting two refferencing in document
-tourSchema.virtual('review', {
+tourSchema.virtual('reviews', {
   ref: 'Review',
   foreignField: 'tour',
   localField: '_id'
