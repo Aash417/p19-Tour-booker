@@ -17,11 +17,14 @@ const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
-// , {
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useFindAndModify: false
-//   }
+
+// This will be need if you are using mongoose v5
+mongoose.connect(DB, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
+});
 
 mongoose.connect(DB).then(con => {
   console.log('database connection successfull');
