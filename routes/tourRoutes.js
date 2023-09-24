@@ -21,6 +21,8 @@ router
     tourController.getMonthlyPlan
   );
 
+router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
+
 //   /tours-within/233/center/-40,40/unit/km
 router
   .route('/tours-within/:distance/center/:latlng/unit/:unit')
