@@ -6,6 +6,8 @@ const helmet = require('helmet');
 const monogoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -27,6 +29,58 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // set security http header
 app.use(helmet());
+// app.use(
+//   cors({
+//     origin: 'http://localhost:8000',
+//     credentials: true
+//   })
+// );
+
+// app.use(helmet());
+// // app.use(
+// //   helmet.contentSecurityPolicy({
+// //     directives: {
+// //       defaultSrc: ["'self'", 'data:', 'blob:'],
+
+// //       baseUri: ["'self'"],
+
+// //       fontSrc: ["'self'", 'https:', 'data:'],
+
+// //       scriptSrc: ["'self'", 'https://*.cloudflare.com'],
+
+// //       //   scriptSrc: ["'self'", 'https://*.stripe.com'],
+
+// //       //   scriptSrc: ["'self'", 'http:', 'https://*.mapbox.com', 'data:'],
+
+// //       frameSrc: ["'self'", 'https://*.stripe.com'],
+
+// //       objectSrc: ["'none'"],
+
+// //       styleSrc: ["'self'", 'https:', 'unsafe-inline'],
+
+// //       workerSrc: ["'self'", 'data:', 'blob:'],
+
+// //       childSrc: ["'self'", 'blob:'],
+
+// //       imgSrc: ["'self'", 'data:', 'blob:'],
+
+// //       connectSrc: ["'self'", 'blob:', 'https://*.mapbox.com'],
+
+// //       upgradeInsecureRequests: []
+// //     }
+// //   })
+// // );
+// //after
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       scriptSrc: ["'self'", 'unpkg.com'],
+//       styleSrc: ["'self'", 'cdnjs.cloudflare.com']
+//       // fontSrc: ["'self'", "maxcdn.bootstrapcdn.com"],
+//     }
+//   })
+// );
 
 // development login
 if (process.env.NODE_ENV === 'development') {
@@ -46,6 +100,8 @@ app.use(
     limit: '10kb'
   })
 );
+// Cookier parser
+app.use(cookieParser());
 
 // Data sanitization against nosql query injection
 app.use(monogoSanitize());
@@ -70,7 +126,7 @@ app.use(
 // Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  //   console.log(req.headers);
+  console.log('cookie: ', req.cookies);
   next();
 });
 
