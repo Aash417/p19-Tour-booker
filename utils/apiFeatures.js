@@ -15,9 +15,7 @@ class APIFeature {
     // { duration: { '$gte': '10' } }
 
     let queryStr = JSON.stringify(queryObj);
-    // console.log(JSON.parse(queryStr));
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
-    // console.log(JSON.parse(queryStr));
 
     this.query = this.query.find(JSON.parse(queryStr));
     return this;

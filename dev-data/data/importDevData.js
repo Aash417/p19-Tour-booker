@@ -14,7 +14,6 @@ const DB = process.env.DATABASE.replace(
 );
 
 mongoose.connect(DB).then(con => {
-  //   console.log(con.connections);
   console.log('database connection successfull from import/delete');
 });
 
@@ -32,7 +31,7 @@ const importData = async () => {
     await Review.create(reviews);
     console.log('successfully added.');
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   process.exit();
 };

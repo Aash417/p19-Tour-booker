@@ -73,7 +73,7 @@ exports.login = catchAsync(async (req, res, next) => {
   //   const correct = await user.correctPasssword(password, user.password);
 
   if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Icorrect email and passoword', 401));
+    return next(new AppError('Incorrect email and passoword', 401));
   }
   // 3. If everything onkeydown, send token to client
   createSendToken(user, 200, res);
@@ -106,7 +106,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   // 2. Verify the token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  //   console.log(decoded);
 
   // 3. Check if user still exists
   const freshUser = await User.findById(decoded.id);
