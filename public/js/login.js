@@ -42,12 +42,18 @@ const login = async (email, password) => {
       password
     });
 
-    if (res.status !== 'success') return;
+    if (res.status === 'success') {
+      alert('Logged in successfully');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1000);
+    }
+    // if (res.status !== 'success') return;
 
-    setTimeout(() => window.location.replace('/'), 1000);
+    // setTimeout(() => window.location.replace('/'), 1000);
   } catch (err) {
-    console.error(err.message);
-    console.error(err);
+    console.log('error : ', err);
+    alert(err.message);
   }
 };
 
