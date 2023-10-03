@@ -1,10 +1,12 @@
 /* eslint-disable */
 import '@babel/polyfill';
-import { login } from './login';
+import { login, logout } from './login';
 
 console.log('hello from parcel');
 
 const loginForm = document.querySelector('.form');
+const logoutBtn = document.querySelector('.nav_el--logout');
+console.log(logoutBtn);
 
 if (loginForm)
   loginForm.addEventListener('submit', e => {
@@ -15,3 +17,5 @@ if (loginForm)
 
     login(email, password);
   });
+
+if (logoutBtn) logoutBtn.addEventListener('click', logout);

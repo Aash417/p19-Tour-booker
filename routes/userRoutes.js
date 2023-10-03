@@ -7,6 +7,7 @@ const router = express.Router();
 // router.route('/signup').post(authController.signup);
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
+router.get('/logout', authController.logout);
 
 // Protect all the routes after this middleware
 router.use(authController.protect);
