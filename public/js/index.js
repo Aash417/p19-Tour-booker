@@ -2,11 +2,10 @@
 import '@babel/polyfill';
 import { login, logout } from './login';
 
-console.log('hello from parcel');
+console.log('hello from parcel(index.js)');
 
-const loginForm = document.querySelector('.form');
+const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav_el--logout');
-console.log(logoutBtn);
 
 if (loginForm)
   loginForm.addEventListener('submit', e => {
