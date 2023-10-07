@@ -172,40 +172,36 @@ exports.restrictTo = (...role) => {
 };
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
-  // 1. Get user based on posted email.
+  // 1) Get user based on POSTed email
   const user = await User.findOne({ email: req.body.email });
-  if (!user)
-    next(new AppError('There is no user exists with this email address.', 404));
+  if (!user) {
+    return next(new AppError('There is no user with email address.', 404));
+  }
 
-  // 2. Generate the reandom reset
+  // 2) Generate the random reset token
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
-  // 3. send it to user's email
-  const resetUrl = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/resetPassword/${resetToken}`;
-
-  const message = `Forgot your password ? Submit a reset password to : ${resetUrl}. \n If you didn't forget your password , please ignore this email.`;
-
+  // 3) Send it to user's email
   try {
-    // await sendEmail({
-    //   email: req.body.email,
-    //   subject: `your password reset token valid for 10 min.`,
-    //   message
-    // });
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/users/resetPassword/${resetToken}`;
+    await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
       status: 'success',
-      message: 'token send to email'
+      resetToken,
+      message: 'Token sent to email!'
     });
-  } catch (error) {
+  } catch (err) {
     user.passwordResetToken = undefined;
-    user.passwordResetExpire = undefined;
+    user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
 
     return next(
-      new AppError('There was error while sending the email. Try again.', 500)
+      new AppError('There was an error sending the email. Try again later!'),
+      500
     );
   }
 });
