@@ -1,7 +1,7 @@
 node_modules/
-config.env
 bundle.js
 bundle.js.map
 bundle.map
 .cache/
 dev-data/
+config.env
