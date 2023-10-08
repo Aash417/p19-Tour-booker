@@ -84,7 +84,7 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'fail';
 
-  console.log('Error in : ', process.env.NODE_ENV);
+  //   console.log('Error in : ', process.env.NODE_ENV);
 
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, req, res);

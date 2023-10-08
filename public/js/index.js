@@ -11,7 +11,6 @@ const logoutBtn = document.querySelector('.nav_el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
-// console.log(bookBtn);
 
 if (loginForm)
   loginForm.addEventListener('submit', e => {
