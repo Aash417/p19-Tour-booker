@@ -28,7 +28,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 1) Global MIDDLEWARES
-
+app.use(cors());
+app.options('*', cors());
 // set security http header
 app.use(helmet());
 // Further HELMET configuration for Security Policy (CSP)
