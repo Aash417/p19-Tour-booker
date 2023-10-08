@@ -126,10 +126,6 @@ app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
-  //   const err = new Error(`Cant find ${req.originalUrl} on this server`);
-  //   err.status = 'failllllll';
-  //   err.statusCode = 404;
-
   next(new AppError(`Cant find ${req.originalUrl} on this server`));
 });
 

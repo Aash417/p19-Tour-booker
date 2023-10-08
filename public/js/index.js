@@ -4,7 +4,7 @@ import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
 
-console.log('hello from parcel(index.js)');
+// console.log('hello from parcel(index.js)');
 
 const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav_el--logout');

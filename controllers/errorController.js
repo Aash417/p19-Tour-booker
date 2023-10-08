@@ -53,7 +53,6 @@ const sendErroPord = (err, req, res) => {
         message: err.message
       });
     }
-
     // Programming or other unknown error : don't leak error details
     // 1. log the error
     console.log(`Error here 🔥: `, err);
