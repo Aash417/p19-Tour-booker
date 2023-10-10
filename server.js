@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
 const app = require('./app');
-const errorController = require('./controllers/errorController');
 
 process.on('uncaughtException', err => {
   console.log('Uncaught Exception');
