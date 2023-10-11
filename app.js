@@ -65,13 +65,13 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!'
 });
 app.use('/api', limiter);
-// STRIPE needs the body in raw format not in json format, so it's before the json body parser
-// app.use(bodyParser.json());
-// app.post(
-//   '/webhook-checkout',
-//   bodyParser.raw({ type: 'application/json' }),
-//   bookingController.webhooksCheckout
-// );
+
+// Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
+app.post(
+  '/webhook-checkout',
+  bodyParser.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
@@ -108,6 +108,7 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
+
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
